@@ -32,7 +32,7 @@
 ## 📁 Structure
 
 ```
-free-base-danuzz/
+WhatsApp-PluginBot-Script/
 ├── index.js            # connection, login (QR/pair), message handler
 ├── config.js           # reads config.env / environment variables
 ├── command.js          # cmd() registry used by plugins
@@ -49,8 +49,8 @@ free-base-danuzz/
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/free-base-danuzz
-cd free-base-danuzz
+git clone https://github.com/dnuzi/WhatsApp-PluginBot-Script
+cd WhatsApp-PluginBot-Script
 npm install
 cp config.env.example config.env
 nano config.env      # set OWNER_NUMBER, CONNECT_MODE ...
