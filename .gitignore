@@ -1,4 +1,4 @@
-node_modules
+node_modules 
 auth_info_baileys
 config.env
 *.log
