@@ -4,7 +4,7 @@ cmd({
     pattern: "ping",
     alias: ["p"],
     desc: "Check bot response speed",
-    react: "🏓",
+    react: "🏓", 
     category: "main",
     filename: __filename
 }, async (conn, mek, m, { from, reply }) => {
