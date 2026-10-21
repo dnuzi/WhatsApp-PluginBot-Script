@@ -21,6 +21,9 @@ module.exports = {
     AUTO_READ_STATUS: bool(process.env.AUTO_READ_STATUS, 'false'),
     ALWAYS_OFFLINE: bool(process.env.ALWAYS_OFFLINE, 'false'),
 
+    CONNECTED_IMAGE: process.env.CONNECTED_IMAGE || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy0NS6vBULeyWdIIkNtPW71TDdQUiuFcRxSdS5MBlpKQ&s=10',   // optional image URL for the connected message
+    TIMEZONE: process.env.TIMEZONE || 'Asia/Colombo',
+
     // ── Server ────────────────────────────────────────────────
     PORT: process.env.PORT || 8000,
 };
