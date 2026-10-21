@@ -245,6 +245,48 @@ async function handleMessage(conn, mek) {
 }
 
 // ─────────────────────────────────────────────────────────────
+//  "Connected" message (sent to the bot's own chat + owner)
+// ─────────────────────────────────────────────────────────────
+let lastConnectedMsg = 0;
+async function sendConnectedMessage(conn) {
+    // avoid spamming on quick reconnects (60s cooldown)
+    if (Date.now() - lastConnectedMsg < 60 * 1000) return;
+    lastConnectedMsg = Date.now();
+
+    const botJid = jidNormalizedUser(conn.user.id);
+    const ownerJids = config.OWNER_NUMBER.map((n) => n + '@s.whatsapp.net');
+    const targets = [...new Set([botJid, ...ownerJids])];
+
+    const time = new Date().toLocaleString('en-GB', { timeZone: config.TIMEZONE, hour12: true });
+    const text =
+`╭━━━〔 *${config.BOT_NAME}* 〕━━━⬣
+┃ ✅ *Connected Successfully!*
+┃
+┃ 🤖 *Bot:* ${conn.user.name || config.BOT_NAME}
+┃ 📱 *Number:* ${botJid.split('@')[0]}
+┃ 🔑 *Login:* ${config.CONNECT_MODE.toUpperCase()}
+┃ 🔰 *Prefix:* ${prefix}
+┃ 🌐 *Mode:* ${config.MODE}
+┃ 🧩 *Commands:* ${events.commands.length}
+┃ 🕐 *Time:* ${time}
+╰━━━━━━━━━━━━━━━━━━⬣
+
+_Type ${prefix}ping to test the bot_`;
+
+    for (const jid of targets) {
+        try {
+            if (config.CONNECTED_IMAGE) {
+                await conn.sendMessage(jid, { image: { url: config.CONNECTED_IMAGE }, caption: text });
+            } else {
+                await conn.sendMessage(jid, { text });
+            }
+        } catch (e) {
+            log.err(`Connected message failed for ${jid}`, e);
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
 //  Connect
 // ─────────────────────────────────────────────────────────────
 let pairRequested = false;
@@ -328,10 +370,7 @@ async function connectToWhatsApp() {
             log.ok(`Connected as ${jidNormalizedUser(conn.user.id)}`);
             loadPlugins();
 
-            const ownerJid = config.OWNER_NUMBER[0] + '@s.whatsapp.net';
-            conn.sendMessage(ownerJid, {
-                text: `✅ *${config.BOT_NAME}* connected successfully!\n\nPREFIX: ${prefix}\nMODE: ${config.MODE}\nLOGIN: ${config.CONNECT_MODE.toUpperCase()}`,
-            }).catch(() => {});
+            sendConnectedMessage(conn);
         }
     });
 
