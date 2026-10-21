@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center"> 
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,18,24&height=220&section=header&text=FREE%20BASE%20DANUZZ&fontSize=52&fontAlignY=38&desc=Plugin%20type%20WhatsApp%20bot%20base&descAlignY=58&animation=fadeIn" width="100%"/>
 
